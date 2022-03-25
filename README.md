@@ -1,4 +1,4 @@
-# UltraTech Writeup (THM)
+# UltraTech Writeup (Tryhackme) by [yag1n3](https://github.com/yaguine)
 
 ### tags
 * security
